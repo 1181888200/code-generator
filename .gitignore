@@ -1,0 +1,6 @@
+/.idea/
+/code-generator.iml
+/demo-generator/demo-generator.iml
+/base-generator/base-generator.iml
+/demo-generator/target/
+/base-generator/target/
