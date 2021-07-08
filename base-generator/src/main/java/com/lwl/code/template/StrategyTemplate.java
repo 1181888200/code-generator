@@ -1,9 +1,9 @@
 package com.lwl.code.template;
 
 import com.baomidou.mybatisplus.generator.AutoGenerator;
+import com.baomidou.mybatisplus.generator.config.StrategyConfig;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.lwl.code.param.MpGeneratorParam;
-import com.lwl.code.param.MyStrategyConfig;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Objects;
@@ -11,7 +11,7 @@ import java.util.Objects;
 public abstract class StrategyTemplate {
 
     public  void initStrategy(AutoGenerator mpg, MpGeneratorParam param){
-        MyStrategyConfig strategy = new MyStrategyConfig();
+        StrategyConfig strategy = new StrategyConfig();
         // 表名生成策略
         strategy.setNaming(NamingStrategy.underline_to_camel);
         // 需要生成的表// 设置生成的表
@@ -28,6 +28,6 @@ public abstract class StrategyTemplate {
         mpg.setStrategy(strategy);
     }
 
-    public abstract void addStrategy(MyStrategyConfig strategy);
+    public abstract void addStrategy(StrategyConfig strategy);
 
 }

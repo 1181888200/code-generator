@@ -1,7 +1,17 @@
 package ${package.Controller};
 
-
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import lombok.extern.slf4j.Slf4j;
+import ${package.Service}.${table.serviceName};
+import ${package.Entity}.${entity};
+/**
+* 此文件需要自己引入项目中的路径
+*/
+import com.lwl.code.response.ResultResponse;
 
 #if(${restControllerStyle})
 import org.springframework.web.bind.annotation.RestController;
@@ -20,6 +30,7 @@ import ${superControllerClassPackage};
  * @author ${author}
  * @since ${date}
  */
+@Slf4j
 #if(${restControllerStyle})
 @RestController
 #else
@@ -36,8 +47,32 @@ public class ${table.controllerName} extends ${superControllerClass} {
 public class ${table.controllerName} {
 #end
 
+  @Autowired
+  public ${table.serviceName} ${table.entityPath}Service;
+
+
+
+
   #if(${cfg.isAddController})
-       dddddddddd
+  /**
+   * 保存和修改公用的
+   * @param ${table.entityPath}  传递的实体
+   * @return Ajaxresult转换结果
+   */
+  @PostMapping(value="/save")
+  public ResultResponse save(@RequestBody ${entity} ${table.entityPath}){
+      try {
+          if(${table.entityPath}.getId()!=null){
+              ${table.entityPath}Service.updateById(${table.entityPath});
+          }else{
+              ${table.entityPath}Service.save(${table.entityPath});
+          }
+          return ResultResponse.ok();
+      } catch (Exception e) {
+          e.printStackTrace();
+          return ResultResponse.error("保存对象失败！"+e.getMessage());
+      }
+  }
   #end
 
 }

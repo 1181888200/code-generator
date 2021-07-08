@@ -2,7 +2,6 @@ package com.lwl.code.template;
 
 import com.lwl.code.exception.GeneratorException;
 import com.lwl.code.param.MpGeneratorParam;
-import org.apache.commons.lang3.StringUtils;
 
 import java.util.Objects;
 import java.util.Properties;

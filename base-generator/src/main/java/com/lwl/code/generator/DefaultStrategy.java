@@ -1,6 +1,6 @@
 package com.lwl.code.generator;
 
-import com.lwl.code.param.MyStrategyConfig;
+import com.baomidou.mybatisplus.generator.config.StrategyConfig;
 import com.lwl.code.template.StrategyTemplate;
 
 /**
@@ -12,7 +12,7 @@ import com.lwl.code.template.StrategyTemplate;
 public class DefaultStrategy extends StrategyTemplate {
 
     @Override
-    public void addStrategy(MyStrategyConfig strategy) {
+    public void addStrategy(StrategyConfig strategy) {
 
     }
 }

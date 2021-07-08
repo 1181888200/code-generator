@@ -4,12 +4,8 @@ import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.*;
 import com.lwl.code.exception.GeneratorException;
-import com.lwl.code.generator.DefaultFileOutPath;
-import com.lwl.code.generator.DefaultStrategy;
-import com.lwl.code.generator.DefaultTemplateConfig;
+import com.lwl.code.generator.*;
 import com.lwl.code.param.MpGeneratorParam;
-import com.lwl.code.generator.MysqlDataSourceConfig;
-import com.lwl.code.param.MyStrategyConfig;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.apache.commons.lang3.StringUtils;
@@ -37,15 +33,19 @@ public abstract class CodeGeneratorTemplate {
 
     private TemplateConfigTemplate templateConfigTemplate;
 
+    private InjectionConfigTemplate injectionConfigTemplate;
+
 
     public CodeGeneratorTemplate(GeneratorParamTemplate generatorParamTemplate) throws GeneratorException {
-        this(new MysqlDataSourceConfig(),new DefaultFileOutPath(),new DefaultStrategy(),new DefaultTemplateConfig());
+        this(new MysqlDataSourceConfig(),new DefaultFileOutPath()
+                ,new DefaultStrategy(),new DefaultTemplateConfig(),new DefaultInjectionConfig());
         this.generatorParamTemplate = generatorParamTemplate;
     }
 
     public CodeGeneratorTemplate(DataSourceConfigTemplate dataSourceConfigTemplate
             , FileOutPathTemplate fileOutPathTemplate, StrategyTemplate strategyTemplate,
-                                 TemplateConfigTemplate templateConfigTemplate) throws GeneratorException {
+                                 TemplateConfigTemplate templateConfigTemplate,
+                                 InjectionConfigTemplate injectionConfigTemplate) throws GeneratorException {
         if(Objects.isNull(dataSourceConfigTemplate)) {
             throw new GeneratorException("自动创建代码-->数据源没有配置");
         }
@@ -56,6 +56,7 @@ public abstract class CodeGeneratorTemplate {
         this.fileOutPathTemplate =fileOutPathTemplate;
         this.strategyTemplate = strategyTemplate;
         this.templateConfigTemplate = templateConfigTemplate;
+        this.injectionConfigTemplate = injectionConfigTemplate;
     }
 
 
@@ -88,20 +89,9 @@ public abstract class CodeGeneratorTemplate {
 
         //包配置
         addPackage(mpg,param);
-
-
-        MyStrategyConfig strategy = (MyStrategyConfig) mpg.getStrategy();
-
-        // 注入自定义配置，可以在 VM 中使用 cfg.abc 【可无】
-        InjectionConfig cfg = new InjectionConfig() {
-            @Override
-            public void initMap() {
-                Map<String, Object> map = new HashMap<String, Object>();
-                map.put("abc", this.getConfig().getGlobalConfig().getAuthor() + "-mp");
-                map.put("isAddController", strategy.isAddController());
-                this.setMap(map);
-            }
-        };
+        // 设置标签
+        InjectionConfig cfg = injectionConfigTemplate.injectionConfig(mpg);
+        // 设置文件存储位置
         fileOutPathTemplate.handleMapper(param,mpg, cfg);
         // 关闭默认 xml 生成，调整生成 至 根目录
         templateConfigTemplate.setTemplate(mpg,param);
