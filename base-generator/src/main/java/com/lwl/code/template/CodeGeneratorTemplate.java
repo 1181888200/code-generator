@@ -119,12 +119,16 @@ public abstract class CodeGeneratorTemplate {
 
     public static void addPackage(AutoGenerator mpg,MpGeneratorParam param){
         final PackageConfig pc = new PackageConfig();
-        if(StringUtils.isNotBlank(param.getModuleName())){
+
+        if(StringUtils.isNotBlank(param.getModuleName())&&param.isModulePackage()){
             pc.setModuleName(param.getModuleName());
         }
         pc.setParent(param.getPackageName());
         pc.setEntity(param.getEntityName());
         pc.setMapper(param.getMapperName());
+        pc.setController(param.getControllerName());
+        pc.setService(param.getServiceName());
+        pc.setServiceImpl(param.getServiceImplName());
         mpg.setPackageInfo(pc);
     }
 

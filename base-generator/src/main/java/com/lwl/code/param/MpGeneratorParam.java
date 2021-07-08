@@ -70,6 +70,19 @@ public class MpGeneratorParam {
      */
     private String mapperName = "mapper";
 
+    /**
+     *  包名控制层
+     */
+    private String controllerName = "controller";
+    /**
+     *  包名服务层
+     */
+    private String serviceName = "service";
+
+    private String serviceImplName = "service.impl";
+
+    private boolean modulePackage = true;
+
 
     public MpGeneratorParam builderDb(String url,String username,String password,String driverName){
         return setUrl(url).setPassword(password).setUsername(username).setDriverName(driverName);

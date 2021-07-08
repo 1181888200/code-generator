@@ -29,10 +29,10 @@ public class DefaultFileOutPath extends FileOutPathTemplate {
             public String outputFile(TableInfo tableInfo) {
 
                 String moduleName = "";
-                if(StringUtils.isNotBlank(mpg.getConfig().getPackageInfo().get(ConstVal.MODULE_NAME))){
-                    moduleName ="/" + mpg.getConfig().getPackageInfo().get(ConstVal.MODULE_NAME);
+                if(StringUtils.isNotBlank(param.getModuleName())){
+                    moduleName ="/" + param.getModuleName();
                 }
-
+                String packName = param.getPackageName().substring(param.getPackageName().lastIndexOf(".")+1);
                 return param.getXmlPath() + (
                          moduleName).replace(".", "/")
                         + "/" + tableInfo.getEntityName() + "Mapper.xml";

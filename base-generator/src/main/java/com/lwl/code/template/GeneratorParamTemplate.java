@@ -2,6 +2,7 @@ package com.lwl.code.template;
 
 import com.lwl.code.exception.GeneratorException;
 import com.lwl.code.param.MpGeneratorParam;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Objects;
 import java.util.Properties;
@@ -37,6 +38,31 @@ public abstract class GeneratorParamTemplate {
         String entityName = properties.getProperty("model.entityName");
         String mapperName = properties.getProperty("model.mapperName");
 
+        String controllerName = properties.getProperty("model.controllerName");
+        String serviceName = properties.getProperty("model.serviceName");
+        String serviceImplName = properties.getProperty("model.serviceImplName");
+        String modulePackage = properties.getProperty("model.modulePackage");
+
+        if(StringUtils.isNotBlank(modulePackage)&&modulePackage.equals("false")){
+            param.setModulePackage(false);
+        }
+
+        if(StringUtils.isNotBlank(controllerName)){
+            param.setControllerName(controllerName);
+        }
+        if(StringUtils.isNotBlank(serviceImplName)){
+            param.setServiceImplName(serviceImplName);
+        }
+        if(StringUtils.isNotBlank(serviceName)){
+            param.setServiceName(serviceName);
+        }
+        if(StringUtils.isNotBlank(mapperName)){
+            param.setMapperName(mapperName);
+        }
+        if(StringUtils.isNotBlank(entityName)){
+            param.setEntityName(entityName);
+        }
+
         if(!Objects.isNull(properties.get("baseClass"))) {
             param.setSuperEntityClass((Class) properties.get("baseClass"));
         }
@@ -44,7 +70,7 @@ public abstract class GeneratorParamTemplate {
 
         param.builderPath(projectPath + javaPath,projectPath + xmlPath).builderTable(tableNames.split(","),tablePrefix)
                 .builderPackage(moduleName,packageName).builderDb(url,username,password,driverName)
-                .setAuthor(author).setEntityName(entityName).setMapperName(mapperName);
+                .setAuthor(author);
         return param;
     }
 
