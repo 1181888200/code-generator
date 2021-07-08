@@ -5,12 +5,11 @@ import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.ConstVal;
 import com.baomidou.mybatisplus.generator.config.FileOutConfig;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
-import com.lwl.code.template.MapperPathTemplate;
+import com.lwl.code.param.MpGeneratorParam;
+import com.lwl.code.template.FileOutPathTemplate;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * @description： 配置xml生成的位置
@@ -18,17 +17,10 @@ import java.util.Map;
  * @date       ：2021/7/8 9:19
  * @version:     1.0.0
  */
-public class DefaultMapperPath extends MapperPathTemplate {
+public class DefaultFileOutPath extends FileOutPathTemplate {
     @Override
-    public void handleMapper(MpGeneratorParam param, AutoGenerator mpg) {
-        InjectionConfig cfg = new InjectionConfig() {
-            @Override
-            public void initMap() {
-                Map<String, Object> map = new HashMap<String, Object>();
-                map.put("abc", this.getConfig().getGlobalConfig().getAuthor() + "-mp");
-                this.setMap(map);
-            }
-        };
+    public void handleMapper(MpGeneratorParam param, AutoGenerator mpg,InjectionConfig cfg) {
+
 
         List<FileOutConfig> focList = new ArrayList<FileOutConfig>();
         // 调整 xml 生成目录演示

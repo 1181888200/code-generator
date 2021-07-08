@@ -1,13 +1,17 @@
 package com.lwl.code.template;
 
 import com.baomidou.mybatisplus.generator.AutoGenerator;
+import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.baomidou.mybatisplus.generator.config.*;
-import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
 import com.lwl.code.exception.GeneratorException;
-import com.lwl.code.generator.DefaultMapperPath;
-import com.lwl.code.generator.MpGeneratorParam;
+import com.lwl.code.generator.DefaultFileOutPath;
+import com.lwl.code.generator.DefaultStrategy;
+import com.lwl.code.generator.DefaultTemplateConfig;
+import com.lwl.code.param.MpGeneratorParam;
 import com.lwl.code.generator.MysqlDataSourceConfig;
+import com.lwl.code.param.MyStrategyConfig;
 import lombok.Data;
+import lombok.experimental.Accessors;
 import org.apache.commons.lang3.StringUtils;
 import java.util.*;
 
@@ -19,32 +23,39 @@ import java.util.*;
  * @version:     1.0.0
  */
 @Data
+@Accessors(chain = true)
 public abstract class CodeGeneratorTemplate {
 
 
     private DataSourceConfigTemplate dataSourceConfigTemplate;
 
-    private MapperPathTemplate mapperPathTemplate;
+    private FileOutPathTemplate fileOutPathTemplate;
 
     private GeneratorParamTemplate generatorParamTemplate;
 
+    private StrategyTemplate strategyTemplate;
 
-    public CodeGeneratorTemplate(GeneratorParamTemplate generatorParamTemplate) {
-        dataSourceConfigTemplate = new MysqlDataSourceConfig();
-        mapperPathTemplate = new DefaultMapperPath();
+    private TemplateConfigTemplate templateConfigTemplate;
+
+
+    public CodeGeneratorTemplate(GeneratorParamTemplate generatorParamTemplate) throws GeneratorException {
+        this(new MysqlDataSourceConfig(),new DefaultFileOutPath(),new DefaultStrategy(),new DefaultTemplateConfig());
         this.generatorParamTemplate = generatorParamTemplate;
     }
 
     public CodeGeneratorTemplate(DataSourceConfigTemplate dataSourceConfigTemplate
-            ,MapperPathTemplate mapperPathTemplate) throws GeneratorException {
+            , FileOutPathTemplate fileOutPathTemplate, StrategyTemplate strategyTemplate,
+                                 TemplateConfigTemplate templateConfigTemplate) throws GeneratorException {
         if(Objects.isNull(dataSourceConfigTemplate)) {
             throw new GeneratorException("自动创建代码-->数据源没有配置");
         }
-        if(Objects.isNull(mapperPathTemplate)) {
-            mapperPathTemplate = new DefaultMapperPath();
+        if(Objects.isNull(fileOutPathTemplate)) {
+            fileOutPathTemplate = new DefaultFileOutPath();
         }
         this.dataSourceConfigTemplate = dataSourceConfigTemplate;
-        this.mapperPathTemplate =mapperPathTemplate;
+        this.fileOutPathTemplate =fileOutPathTemplate;
+        this.strategyTemplate = strategyTemplate;
+        this.templateConfigTemplate = templateConfigTemplate;
     }
 
 
@@ -73,17 +84,27 @@ public abstract class CodeGeneratorTemplate {
         dataSourceConfigTemplate.addDb(mpg,param);
 
         //策略配置
-        addStrategy(mpg,param);
+        strategyTemplate.initStrategy(mpg,param);
 
         //包配置
         addPackage(mpg,param);
 
+
+        MyStrategyConfig strategy = (MyStrategyConfig) mpg.getStrategy();
+
         // 注入自定义配置，可以在 VM 中使用 cfg.abc 【可无】
-        mapperPathTemplate.handleMapper(param, mpg);
+        InjectionConfig cfg = new InjectionConfig() {
+            @Override
+            public void initMap() {
+                Map<String, Object> map = new HashMap<String, Object>();
+                map.put("abc", this.getConfig().getGlobalConfig().getAuthor() + "-mp");
+                map.put("isAddController", strategy.isAddController());
+                this.setMap(map);
+            }
+        };
+        fileOutPathTemplate.handleMapper(param,mpg, cfg);
         // 关闭默认 xml 生成，调整生成 至 根目录
-        TemplateConfig tc = new TemplateConfig();
-        tc.setXml(null);
-        mpg.setTemplate(tc);
+        templateConfigTemplate.setTemplate(mpg,param);
         // 执行生成
         mpg.execute();
 
@@ -105,23 +126,6 @@ public abstract class CodeGeneratorTemplate {
         mpg.setGlobalConfig(gc);
     }
 
-
-    public static void addStrategy(AutoGenerator mpg,MpGeneratorParam param){
-        StrategyConfig strategy = new StrategyConfig();
-        // 表名生成策略
-        strategy.setNaming(NamingStrategy.underline_to_camel);
-        // 需要生成的表// 设置生成的表
-        strategy.setInclude(param.getTableNames());
-        if(StringUtils.isNotBlank(param.getTablePrefix())){
-            strategy.setTablePrefix(param.getTablePrefix());
-        }
-        strategy.setRestControllerStyle(true);
-        strategy.setEntityLombokModel(true);
-        if(!Objects.isNull(param.getSuperEntityClass())){
-            strategy.setSuperEntityClass(param.getSuperEntityClass());
-        }
-        mpg.setStrategy(strategy);
-    }
 
     public static void addPackage(AutoGenerator mpg,MpGeneratorParam param){
         final PackageConfig pc = new PackageConfig();

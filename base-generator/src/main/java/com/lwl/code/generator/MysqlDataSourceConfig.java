@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
 import com.baomidou.mybatisplus.generator.config.converts.SqlServerTypeConvert;
 import com.baomidou.mybatisplus.generator.config.rules.DbColumnType;
+import com.lwl.code.param.MpGeneratorParam;
 import com.lwl.code.template.DataSourceConfigTemplate;
 
 /**
@@ -16,7 +17,7 @@ import com.lwl.code.template.DataSourceConfigTemplate;
 public class MysqlDataSourceConfig extends DataSourceConfigTemplate {
 
     @Override
-    public void addDb(AutoGenerator mpg,MpGeneratorParam param){
+    public void addDb(AutoGenerator mpg, MpGeneratorParam param){
         DataSourceConfig dsc = new DataSourceConfig();
         dsc.setDbType(DbType.MYSQL);
         dsc.setTypeConvert(new SqlServerTypeConvert() {

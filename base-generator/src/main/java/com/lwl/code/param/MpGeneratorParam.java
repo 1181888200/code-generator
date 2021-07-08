@@ -1,4 +1,4 @@
-package com.lwl.code.generator;
+package com.lwl.code.param;
 
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -68,7 +68,12 @@ public class MpGeneratorParam {
     /**
      *  mapper文件包名的最后一个值 xxx.xxx.mapper
      */
-    private String mapperName = "mapper";;
+    private String mapperName = "mapper";
+
+    /**
+     *  自定义模板位置
+     */
+    private String templatePath;
 
     public MpGeneratorParam builderDb(String url,String username,String password,String driverName){
         return setUrl(url).setPassword(password).setUsername(username).setDriverName(driverName);

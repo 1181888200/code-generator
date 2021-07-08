@@ -1,7 +1,8 @@
 package com.lwl.code.template;
 
 import com.lwl.code.exception.GeneratorException;
-import com.lwl.code.generator.MpGeneratorParam;
+import com.lwl.code.param.MpGeneratorParam;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.Objects;
 import java.util.Properties;
@@ -27,6 +28,7 @@ public abstract class GeneratorParamTemplate {
 
         String javaPath = properties.getProperty("path.javaPath");
         String xmlPath = properties.getProperty("path.xmlPath");
+        String templatePath = properties.getProperty("path.templatePath");
 
         String tablePrefix = properties.getProperty("table.tablePrefix");
         String tableNames = properties.getProperty("table.tableNames");
@@ -36,10 +38,14 @@ public abstract class GeneratorParamTemplate {
         String author = properties.getProperty("model.author");
         String entityName = properties.getProperty("model.entityName");
         String mapperName = properties.getProperty("model.mapperName");
+
         if(!Objects.isNull(properties.get("baseClass"))) {
             param.setSuperEntityClass((Class) properties.get("baseClass"));
         }
         String projectPath = properties.getProperty("user.dir");
+        if(StringUtils.isNotBlank(templatePath)) {
+            param.setTemplatePath(projectPath +templatePath);
+        }
         param.builderPath(projectPath + javaPath,projectPath + xmlPath).builderTable(tableNames.split(","),tablePrefix)
                 .builderPackage(moduleName,packageName).builderDb(url,username,password,driverName)
                 .setAuthor(author).setEntityName(entityName).setMapperName(mapperName);

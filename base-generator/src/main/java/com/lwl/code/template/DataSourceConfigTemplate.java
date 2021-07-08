@@ -1,7 +1,7 @@
 package com.lwl.code.template;
 
 import com.baomidou.mybatisplus.generator.AutoGenerator;
-import com.lwl.code.generator.MpGeneratorParam;
+import com.lwl.code.param.MpGeneratorParam;
 
 /**
  * @description： 数据源配置
