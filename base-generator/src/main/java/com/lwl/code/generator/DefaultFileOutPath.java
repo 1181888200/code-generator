@@ -7,6 +7,7 @@ import com.baomidou.mybatisplus.generator.config.FileOutConfig;
 import com.baomidou.mybatisplus.generator.config.po.TableInfo;
 import com.lwl.code.param.MpGeneratorParam;
 import com.lwl.code.template.FileOutPathTemplate;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,16 +20,21 @@ import java.util.List;
  */
 public class DefaultFileOutPath extends FileOutPathTemplate {
     @Override
-    public void handleMapper(MpGeneratorParam param, AutoGenerator mpg,InjectionConfig cfg) {
-
+    public void setFileOutPath(MpGeneratorParam param, AutoGenerator mpg,InjectionConfig cfg) {
 
         List<FileOutConfig> focList = new ArrayList<FileOutConfig>();
         // 调整 xml 生成目录演示
         focList.add(new FileOutConfig("/templates/mapper.xml.vm") {
             @Override
             public String outputFile(TableInfo tableInfo) {
-                return param.getXmlPath() + ("/" + param.getPackageName().substring(param.getPackageName().lastIndexOf(".")+1)
-                        + "/" + mpg.getConfig().getPackageInfo().get(ConstVal.MODULE_NAME)).replace(".", "/")
+
+                String moduleName = "";
+                if(StringUtils.isNotBlank(mpg.getConfig().getPackageInfo().get(ConstVal.MODULE_NAME))){
+                    moduleName ="/" + mpg.getConfig().getPackageInfo().get(ConstVal.MODULE_NAME);
+                }
+
+                return param.getXmlPath() + (
+                         moduleName).replace(".", "/")
                         + "/" + tableInfo.getEntityName() + "Mapper.xml";
             }
         });

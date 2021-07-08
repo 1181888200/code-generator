@@ -12,6 +12,12 @@ import com.lwl.code.param.MpGeneratorParam;
  */
 public abstract class TemplateConfigTemplate {
 
+    /**
+     * @description： 如果设置自定义模板，则在此方法中新增对应的位置
+     * @author     ：lwl
+     * @date       ：2021/7/8 14:52
+     * @version:     1.0.0
+     */
     public abstract void handleTemplatePath(TemplateConfig tc,MpGeneratorParam param);
 
     public  void setTemplate(AutoGenerator mpg, MpGeneratorParam param){

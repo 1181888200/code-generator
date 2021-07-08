@@ -5,12 +5,12 @@ import com.baomidou.mybatisplus.generator.InjectionConfig;
 import com.lwl.code.param.MpGeneratorParam;
 
 /**
- * @description： mapper文件生成位置
+ * @description： 如果要调整文件生成的位置，重写该方法
  * @author     ：lwl
  * @date       ：2021/7/8 9:16
  * @version:     1.0.0
  */
 public abstract class FileOutPathTemplate {
 
-    public abstract void handleMapper(MpGeneratorParam param, AutoGenerator mpg,InjectionConfig cfg);
+    public abstract void setFileOutPath(MpGeneratorParam param, AutoGenerator mpg,InjectionConfig cfg);
 }

@@ -92,7 +92,7 @@ public abstract class CodeGeneratorTemplate {
         // 设置标签
         InjectionConfig cfg = injectionConfigTemplate.injectionConfig(mpg);
         // 设置文件存储位置
-        fileOutPathTemplate.handleMapper(param,mpg, cfg);
+        fileOutPathTemplate.setFileOutPath(param,mpg, cfg);
         // 关闭默认 xml 生成，调整生成 至 根目录
         templateConfigTemplate.setTemplate(mpg,param);
         // 执行生成
@@ -119,7 +119,9 @@ public abstract class CodeGeneratorTemplate {
 
     public static void addPackage(AutoGenerator mpg,MpGeneratorParam param){
         final PackageConfig pc = new PackageConfig();
-        pc.setModuleName(param.getModuleName());
+        if(StringUtils.isNotBlank(param.getModuleName())){
+            pc.setModuleName(param.getModuleName());
+        }
         pc.setParent(param.getPackageName());
         pc.setEntity(param.getEntityName());
         pc.setMapper(param.getMapperName());
@@ -148,9 +150,6 @@ public abstract class CodeGeneratorTemplate {
 
         if(StringUtils.isBlank(param.getJavaPath())){
             throw new GeneratorException("自动创建代码-->代码存储位置未配置");
-        }
-        if(StringUtils.isBlank(param.getModuleName())){
-            throw new GeneratorException("自动创建代码-->模块名称未配置");
         }
         if(StringUtils.isBlank(param.getPackageName())){
             throw new GeneratorException("自动创建代码-->包名未配置");

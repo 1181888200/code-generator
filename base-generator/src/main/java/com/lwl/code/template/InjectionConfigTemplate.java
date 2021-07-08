@@ -6,6 +6,12 @@ import com.baomidou.mybatisplus.generator.InjectionConfig;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * @description： 如果要自定义模板中添加属性，重写addVmValue方法
+ * @author     ：lwl
+ * @date       ：2021/7/8 14:50
+ * @version:     1.0.0
+ */
 public abstract class InjectionConfigTemplate {
 
     public abstract void addVmValue(Map<String, Object> map);
