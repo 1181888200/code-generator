@@ -28,7 +28,6 @@ public abstract class GeneratorParamTemplate {
 
         String javaPath = properties.getProperty("path.javaPath");
         String xmlPath = properties.getProperty("path.xmlPath");
-        String templatePath = properties.getProperty("path.templatePath");
 
         String tablePrefix = properties.getProperty("table.tablePrefix");
         String tableNames = properties.getProperty("table.tableNames");
@@ -43,9 +42,7 @@ public abstract class GeneratorParamTemplate {
             param.setSuperEntityClass((Class) properties.get("baseClass"));
         }
         String projectPath = properties.getProperty("user.dir");
-        if(StringUtils.isNotBlank(templatePath)) {
-            param.setTemplatePath(projectPath +templatePath);
-        }
+
         param.builderPath(projectPath + javaPath,projectPath + xmlPath).builderTable(tableNames.split(","),tablePrefix)
                 .builderPackage(moduleName,packageName).builderDb(url,username,password,driverName)
                 .setAuthor(author).setEntityName(entityName).setMapperName(mapperName);
