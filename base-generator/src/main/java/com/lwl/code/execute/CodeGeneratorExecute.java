@@ -1,4 +1,4 @@
-package com.lwl.code.generator;
+package com.lwl.code.execute;
 
 import com.lwl.code.exception.GeneratorException;
 import com.lwl.code.template.CodeGeneratorTemplate;
@@ -10,10 +10,7 @@ import lombok.experimental.Accessors;
 @Accessors(chain = true)
 public class CodeGeneratorExecute extends CodeGeneratorTemplate {
 
-    private GeneratorParamTemplate generatorParamTemplate;
-
     public CodeGeneratorExecute(GeneratorParamTemplate generatorParamTemplate) throws GeneratorException {
         super(generatorParamTemplate);
     }
-
 }

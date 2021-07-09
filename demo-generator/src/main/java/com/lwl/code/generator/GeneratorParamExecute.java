@@ -15,7 +15,7 @@ public class GeneratorParamExecute extends GeneratorParamTemplate {
     public Properties initProperties(String propertiesPath) throws GeneratorException {
         Properties properties = new Properties();
         try{
-            propertiesPath = StringUtils.isBlank(propertiesPath)?"generator//generator.properties":propertiesPath;
+            propertiesPath = StringUtils.isBlank(propertiesPath)?"templates//generator.properties":propertiesPath;
             Resource resource = new ClassPathResource(propertiesPath);
             InputStream inputStream = resource.getInputStream();
             properties.load(inputStream);

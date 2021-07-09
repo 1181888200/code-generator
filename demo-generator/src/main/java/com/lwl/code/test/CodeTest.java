@@ -1,6 +1,6 @@
 package com.lwl.code.test;
 
-import com.lwl.code.generator.CodeGeneratorExecute;
+import com.lwl.code.execute.CodeGeneratorExecute;
 import com.lwl.code.generator.GeneratorParamExecute;
 import com.lwl.code.generator.MyInjectionConfig;
 import com.lwl.code.generator.MyTemplateConfig;
