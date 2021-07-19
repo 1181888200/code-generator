@@ -6,7 +6,7 @@ import ${package.Entity}.${entity};
  *  Service接口
  *
  * @author ${author}
- * @date ${datetime}
+ * @date ${date}
  */
 public interface ${table.serviceName}
 {

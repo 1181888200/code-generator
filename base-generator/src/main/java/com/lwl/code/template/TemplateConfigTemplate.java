@@ -23,8 +23,8 @@ public abstract class TemplateConfigTemplate {
     public  void setTemplate(AutoGenerator mpg, MpGeneratorParam param){
         // 关闭默认 xml 生成，调整生成 至 根目录
         TemplateConfig tc = new TemplateConfig();
-        handleTemplatePath(tc,param);
         tc.setXml(null);
+        handleTemplatePath(tc,param);
         mpg.setTemplate(tc);
     };
 

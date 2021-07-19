@@ -89,12 +89,12 @@ public abstract class CodeGeneratorTemplate {
 
         //包配置
         addPackage(mpg,param);
+        // 关闭默认 xml 生成，调整生成 至 根目录
+        templateConfigTemplate.setTemplate(mpg,param);
         // 设置标签
         InjectionConfig cfg = injectionConfigTemplate.injectionConfig(mpg);
         // 设置文件存储位置
         fileOutPathTemplate.setFileOutPath(param,mpg, cfg);
-        // 关闭默认 xml 生成，调整生成 至 根目录
-        templateConfigTemplate.setTemplate(mpg,param);
         // 执行生成
         mpg.execute();
 
