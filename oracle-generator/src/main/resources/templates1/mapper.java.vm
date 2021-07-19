@@ -1,0 +1,29 @@
+package ${package.Mapper};
+import java.util.List;
+import ${package.Entity}.${entity};
+
+/**
+ * ${table.mapperName}Mapper接口
+ *
+ * @author ${author}
+ * @date ${date}
+ */
+public interface ${table.mapperName}
+{
+
+    public ${entity}  select${entity}ById(${table.fields[0].propertyType} ${table.fields[0].propertyName});
+
+
+    public  List<${entity}> select${entity}List(${entity} ${table.entityPath});
+
+
+    public add${entity}(${entity} ${table.entityPath});
+
+
+    public int update${entity}(${entity} ${table.entityPath});
+
+
+    public int delete${entity}ByIds(${table.fields[0].propertyType}[] ${table.fields[0].propertyName}s);
+
+    public int delete${entity}ById(${table.fields[0].propertyType} ${table.fields[0].propertyName});
+}

@@ -1,0 +1,29 @@
+package ${package.Service};
+import java.util.List;
+import ${package.Entity}.${entity};
+
+/**
+ *  Service接口
+ *
+ * @author ${author}
+ * @date ${datetime}
+ */
+public interface ${table.serviceName}
+{
+
+    ${entity}  select${entity}ById(${table.fields[0].propertyType} ${table.fields[0].propertyName});
+
+     List<${entity}> select${entity}List(${entity} ${table.entityPath});
+
+
+     int insert${entity}(${entity} ${table.entityPath});
+
+
+    public int update${entity}(${entity} ${table.entityPath});
+
+
+    public int delete${entity}ByIds(${table.fields[0].propertyType}[] ${table.fields[0].propertyName}s);
+
+
+    public int delete${entity}ById(${table.fields[0].propertyType} ${table.fields[0].propertyName});
+}

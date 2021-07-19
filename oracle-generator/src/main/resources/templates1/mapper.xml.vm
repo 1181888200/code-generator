@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="${package.Mapper}.${table.mapperName}">
+
+
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="${entity}Result" type="${package.Entity}.${entity}">
+        #foreach($field in $table.fields )
+            #if($field.keyFlag)
+                <id column="${field.name}" property="${field.propertyName}" />
+            #end
+        #end
+
+        #foreach($field in $table.commonFields )
+            <id column="${field.name}" property="${field.propertyName}" />
+        #end
+
+        #foreach($field in $table.fields )
+            #if(!$field.keyFlag)
+                <result column="${field.name}" property="${field.propertyName}" />
+            #end
+        #end
+
+    </resultMap>
+
+
+    <sql id="select${entity}Vo">
+        select#foreach($column in $table.commonFields) $column.name#if($velocityCount != $table.commonFields.size()),#end#end from ${table.name}
+    </sql>
+
+    <select id="select${entity}List" parameterType="${entity}" resultMap="${entity}Result">
+        <include refid="select${entity}Vo"/>
+
+    </select>
+
+    <select id="select${entity}ById" parameterType="${table.fields[0].propertyType}" resultMap="${entity}Result">
+    <include refid="select${entity}Vo"/>
+    where ${table.fields[0].propertyName} = #{${table.fields[0].propertyName}}
+
+    </select>
+
+    <insert id="insert${entity}" parameterType="${entity}">
+
+    </insert>
+
+    <update id="update${entity}" parameterType="${entity}">
+
+    </update>
+
+    <delete id="delete${entity}ById" parameterType="${table.fields[0].propertyType}">
+        delete from ${table.name}  where ${table.fields[0].propertyName} = #{${table.fields[0].propertyName}}
+    </delete>
+
+    <delete id="delete${entity}ByIds" parameterType="String">
+
+    </delete>
+
+</mapper>

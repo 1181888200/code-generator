@@ -1,0 +1,104 @@
+package ${package.Controller};
+
+import java.util.List;
+import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+import com.cspm.framework.aspectj.lang.annotation.Log;
+import com.cspm.framework.aspectj.lang.enums.BusinessType;
+import ${package.Service}.${table.serviceName};
+import ${package.Entity}.${entity};
+import com.cspm.framework.web.controller.BaseController;
+import com.cspm.framework.web.domain.AjaxResult;
+import com.cspm.common.utils.poi.ExcelUtil;
+import com.cspm.framework.web.page.TableDataInfo;
+
+/**
+ * ${table.controllerName}
+ *
+ * @author ${author}
+ * @date ${date}
+ */
+@RestController
+@RequestMapping("/${package.ModuleName}/${table.entityPath}")
+public class ${table.controllerName} extends BaseController
+{
+    @Autowired
+    public ${table.serviceName} ${table.entityPath}Service;
+
+    /**
+     * 查询列表
+     */
+    @PreAuthorize("@ss.hasPermi('${package.ModuleName}:${table.entityPath}:list')")
+    @GetMapping("/list")
+    public TableDataInfo list(${entity} ${table.entityPath})
+    {
+        startPage();
+        List<${entity}> list = ${table.entityPath}Service.select${entity}List(${table.entityPath});
+        return getDataTable(list);
+    }
+
+
+    /**
+     * 导出export列表
+     */
+    @PreAuthorize("@ss.hasPermi('${package.ModuleName}:${table.entityPath}:export')")
+    @Log(title = "export", businessType = BusinessType.EXPORT)
+    @GetMapping("/export")
+    public AjaxResult export(${entity} ${table.entityPath})
+    {
+        List<${entity}> list = ${table.entityPath}Service.select${entity}List(${table.entityPath});
+        ExcelUtil<${entity}> util = new ExcelUtil<${entity}>(${entity}.class);
+        return util.exportExcel(list, "导出数据");
+    }
+
+    /**
+     * 获取 详细信息
+     */
+    @PreAuthorize("@ss.hasPermi('${package.ModuleName}:${table.entityPath}:query')")
+    @GetMapping(value = "/{${table.fields[0].propertyName}}")
+    public AjaxResult getInfo(@PathVariable("${table.fields[0].propertyName}") ${table.fields[0].propertyType} ${table.fields[0].propertyName})
+    {
+        return AjaxResult.success(${table.entityPath}Service.select${entity}ById(${table.fields[0].propertyName}));
+    }
+
+    /**
+     * 新增${table.entityPath}
+     */
+    @PreAuthorize("@ss.hasPermi('${package.ModuleName}:${table.entityPath}:add')")
+    @Log(title = "新增${table.entityPath}", businessType = BusinessType.INSERT)
+    @PostMapping
+    public AjaxResult add(@RequestBody ${entity} ${table.entityPath})
+    {
+        return toAjax(${table.entityPath}Service.insert${entity}(${table.entityPath}));
+    }
+
+    /**
+     * 修改${table.entityPath}
+     */
+    @PreAuthorize("@ss.hasPermi('${package.ModuleName}:${table.entityPath}:edit')")
+    @Log(title = "${table.entityPath}", businessType = BusinessType.UPDATE)
+    @PutMapping
+    public AjaxResult edit(@RequestBody ${entity} ${table.entityPath})
+    {
+        return toAjax(${table.entityPath}Service.update${entity}(${table.entityPath}));
+    }
+
+    /**
+     * 删除${table.entityPath}
+     */
+    @PreAuthorize("@ss.hasPermi('${package.ModuleName}:${table.entityPath}:remove')")
+    @Log(title = "${table.entityPath}", businessType = BusinessType.DELETE)
+	@DeleteMapping("/{${table.fields[0].propertyName}s}")
+    public AjaxResult remove(@PathVariable ${table.fields[0].propertyType}[] ${table.fields[0].propertyName}s)
+    {
+        return toAjax(${table.entityPath}Service.delete${entity}ByIds(${table.fields[0].propertyName}s));
+    }
+}

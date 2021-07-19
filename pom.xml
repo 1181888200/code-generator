@@ -11,6 +11,7 @@
     <modules>
         <module>base-generator</module>
         <module>demo-generator</module>
+        <module>oracle-generator</module>
     </modules>
 
 

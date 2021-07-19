@@ -1,0 +1,67 @@
+package ${package.ServiceImpl};
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import ${package.Entity}.${entity};
+import ${package.Mapper}.${table.mapperName};
+import ${package.Service}.${table.serviceName};
+
+/**
+ * Service业务层处理
+ *
+ * @author ${author}
+ * @date ${date}
+ */
+@Service
+public class ${table.serviceImplName} implements ${table.serviceName}
+{
+    @Autowired
+    private ${entity}Mapper ${table.entityPath}Mapper;
+
+    @Override
+    public ${entity} select${entity}ById(${table.fields[0].propertyType} ${table.fields[0].propertyName})
+    {
+        return ${table.entityPath}Mapper.select${entity}ById(${table.fields[0].propertyName});
+    }
+
+
+    @Override
+    public List<${entity}> select${entity}List(${entity} ${table.entityPath})
+    {
+        return ${table.entityPath}Mapper.select${entity}List(${table.entityPath});
+    }
+
+
+    @Override
+    public int insert${entity}(${entity} ${table.entityPath})
+    {
+        return ${table.entityPath}Mapper.update${entity}(${table.entityPath});
+
+    }
+
+
+    @Override
+    public int update${entity}(${entity} ${table.entityPath})
+    {
+
+        return ${table.entityPath}Mapper.update${entity}(${table.entityPath});
+    }
+
+
+    @Override
+    public int delete${entity}ByIds(${table.fields[0].propertyType}[] ${table.fields[0].propertyName}s)
+    {
+
+        return ${table.entityPath}Mapper.delete${entity}ByIds(${table.fields[0].propertyName}s);
+    }
+
+    
+    @Override
+    public int delete${entity}ById(${table.fields[0].propertyType} ${table.fields[0].propertyName})
+    {
+        return ${table.entityPath}Mapper.delete${entity}ById(${table.fields[0].propertyName});
+    }
+
+}
