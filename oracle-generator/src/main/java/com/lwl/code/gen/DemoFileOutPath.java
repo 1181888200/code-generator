@@ -49,9 +49,9 @@ public class DemoFileOutPath extends FileOutPathTemplate {
                     moduleName ="/" + param.getModuleName();
                 }
 
-                String packName = "/" + param.getPackageName() +"/domain";
+                String packName = "/" + param.getPackageName()+ moduleName +"/domain";
                 String fullPath =  param.getJavaPath() + (
-                        packName + moduleName).replace(".", "/")
+                        packName ).replace(".", "/")
                         + "/" + tableInfo.getEntityName() + ".java";
 
                 return fullPath;
@@ -66,9 +66,9 @@ public class DemoFileOutPath extends FileOutPathTemplate {
                 if(StringUtils.isNotBlank(param.getModuleName())){
                     moduleName ="/" + param.getModuleName();
                 }
-                String packName = "/" + param.getPackageName() +"/controller";
+                String packName = "/" + param.getPackageName() + moduleName+"/controller";
                 String fullPath =  param.getJavaPath() + (
-                        packName + moduleName).replace(".", "/")
+                        packName ).replace(".", "/")
                         + "/" + tableInfo.getEntityName() + "Controller.java";
 
                 return fullPath;
@@ -83,9 +83,9 @@ public class DemoFileOutPath extends FileOutPathTemplate {
                 if(StringUtils.isNotBlank(param.getModuleName())){
                     moduleName ="/" + param.getModuleName();
                 }
-                String packName = "/" + param.getPackageName() +"/service";
+                String packName = "/" + param.getPackageName() + moduleName+"/service";
                 return param.getJavaPath() + (
-                        packName+ moduleName).replace(".", "/")
+                        packName ).replace(".", "/")
                         + "/I" + tableInfo.getEntityName() + "Service.java";
             }
         });
@@ -98,9 +98,9 @@ public class DemoFileOutPath extends FileOutPathTemplate {
                 if(StringUtils.isNotBlank(param.getModuleName())){
                     moduleName ="/" + param.getModuleName();
                 }
-                String packName = "/" + param.getPackageName() +"/service";
+                String packName = "/" + param.getPackageName()+ moduleName +"/service";
                 return param.getJavaPath() + (
-                        packName+ moduleName +"/impl").replace(".", "/")
+                        packName +"/impl").replace(".", "/")
                         + "/" + tableInfo.getEntityName() + "ServiceImpl.java";
             }
         });
