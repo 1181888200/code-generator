@@ -1,0 +1,24 @@
+
+
+gen:
+  database:
+    url: jdbc:mysql://192.168.31.33:3306/crystal?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: root
+    password: 123456
+    driverName: com.mysql.cj.jdbc.Driver
+
+  path:
+    javaPath: /src/main/java
+    xmlPath: /src/main/resources/mapper
+
+  table:
+    tablePrefix: p_
+    tableNames: p_org_crystal,p_org_info,p_org_student
+
+  model:
+    packageName: com.lwl.code
+    author: lwl
+    moduleName: org
+    modulePackage: true
+
+    baseClass: com.lwl.code.model.BaseModel

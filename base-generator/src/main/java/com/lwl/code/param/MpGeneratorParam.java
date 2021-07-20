@@ -1,5 +1,6 @@
 package com.lwl.code.param;
 
+import com.lwl.code.config.MpGeneratorParamConfig;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.apache.commons.lang3.StringUtils;
@@ -13,6 +14,29 @@ import org.apache.commons.lang3.StringUtils;
 @Data
 @Accessors(chain = true)
 public class MpGeneratorParam {
+
+    public MpGeneratorParam() {}
+    public MpGeneratorParam(MpGeneratorParamConfig config) {
+        this.url = config.getUrl();
+        this.username = config.getUsername();
+        this.password = config.getPassword();
+        this.driverName = config.getDriverName();
+        this.superEntityClass = config.getSuperEntityClass();
+        this.javaPath = config.getJavaPath();
+        this.xmlPath = config.getXmlPath();
+        this.tablePrefix = config.getTablePrefix();
+        this.tableNames = config.getTableNames();
+        this.moduleName = config.getModuleName();
+        this.packageName = config.getPackageName();
+        this.author = config.getAuthor();
+        this.entityName =config.getEntityName();
+        this.mapperName = config.getMapperName();
+        this.controllerName = config.getControllerName();
+        this.serviceImplName = config.getServiceImplName();
+        this.serviceName = config.getServiceName();
+        this.modulePackage = config.isModulePackage();
+    }
+
 
     /**
      *  数据库相关的
@@ -99,4 +123,6 @@ public class MpGeneratorParam {
     public MpGeneratorParam builderTable(String[] tableNames,String tablePrefix){
         return setTableNames(tableNames).setTablePrefix(tablePrefix);
     }
+
+
 }

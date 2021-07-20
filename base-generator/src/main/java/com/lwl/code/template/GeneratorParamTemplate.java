@@ -21,27 +21,27 @@ public abstract class GeneratorParamTemplate {
         MpGeneratorParam param = new MpGeneratorParam();
         Properties properties = initProperties(propertiesPath);
 
-        String url = properties.getProperty("database.url");
-        String username = properties.getProperty("database.username");
-        String password = properties.getProperty("database.password");
-        String driverName = properties.getProperty("database.driverName");
+        String url = properties.getProperty("gen.database.url");
+        String username = properties.getProperty("gen.database.username");
+        String password = properties.getProperty("gen.database.password");
+        String driverName = properties.getProperty("gen.database.driverName");
 
-        String javaPath = properties.getProperty("path.javaPath");
-        String xmlPath = properties.getProperty("path.xmlPath");
+        String javaPath = properties.getProperty("gen.path.javaPath");
+        String xmlPath = properties.getProperty("gen.path.xmlPath");
 
-        String tablePrefix = properties.getProperty("table.tablePrefix");
-        String tableNames = properties.getProperty("table.tableNames");
+        String tablePrefix = properties.getProperty("gen.table.tablePrefix");
+        String tableNames = properties.getProperty("gen.table.tableNames");
 
-        String moduleName = properties.getProperty("model.moduleName");
-        String packageName = properties.getProperty("model.packageName");
-        String author = properties.getProperty("model.author");
-        String entityName = properties.getProperty("model.entityName");
-        String mapperName = properties.getProperty("model.mapperName");
+        String moduleName = properties.getProperty("gen.model.moduleName");
+        String packageName = properties.getProperty("gen.model.packageName");
+        String author = properties.getProperty("gen.model.author");
+        String entityName = properties.getProperty("gen.model.entityName");
+        String mapperName = properties.getProperty("gen.model.mapperName");
 
-        String controllerName = properties.getProperty("model.controllerName");
-        String serviceName = properties.getProperty("model.serviceName");
-        String serviceImplName = properties.getProperty("model.serviceImplName");
-        String modulePackage = properties.getProperty("model.modulePackage");
+        String controllerName = properties.getProperty("gen.model.controllerName");
+        String serviceName = properties.getProperty("gen.model.serviceName");
+        String serviceImplName = properties.getProperty("gen.model.serviceImplName");
+        String modulePackage = properties.getProperty("gen.model.modulePackage");
 
         if(StringUtils.isNotBlank(modulePackage)&&modulePackage.equals("false")){
             param.setModulePackage(false);

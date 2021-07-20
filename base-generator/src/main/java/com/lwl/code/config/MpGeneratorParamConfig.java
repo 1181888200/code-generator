@@ -61,7 +61,7 @@ public class MpGeneratorParamConfig {
     /**
      * 实体类的父类
      */
-    @Value("${gen.model.superEntityClass}")
+    @Value("${gen.model.baseClass}")
     private Class superEntityClass;
 
     /**

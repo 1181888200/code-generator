@@ -20,7 +20,7 @@ public class GeneratorParamExecute extends GeneratorParamTemplate {
             InputStream inputStream = resource.getInputStream();
             properties.load(inputStream);
             properties.setProperty("user.dir",System.getProperty("user.dir"));
-            String baseClass = properties.getProperty("model.baseClass");
+            String baseClass = properties.getProperty("gen.model.baseClass");
             if(StringUtils.isNotBlank(baseClass)){
                 properties.put("baseClass", Class.forName(baseClass));
             }
