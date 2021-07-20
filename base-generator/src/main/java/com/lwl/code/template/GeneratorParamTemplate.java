@@ -1,9 +1,12 @@
 package com.lwl.code.template;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.lwl.code.exception.GeneratorException;
 import com.lwl.code.param.MpGeneratorParam;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.Map;
 import java.util.Objects;
 import java.util.Properties;
 
@@ -42,6 +45,7 @@ public abstract class GeneratorParamTemplate {
         String serviceName = properties.getProperty("gen.model.serviceName");
         String serviceImplName = properties.getProperty("gen.model.serviceImplName");
         String modulePackage = properties.getProperty("gen.model.modulePackage");
+        String labelMap = properties.getProperty("gen.label.map");
 
         if(StringUtils.isNotBlank(modulePackage)&&modulePackage.equals("false")){
             param.setModulePackage(false);
@@ -62,7 +66,10 @@ public abstract class GeneratorParamTemplate {
         if(StringUtils.isNotBlank(entityName)){
             param.setEntityName(entityName);
         }
-
+        if(StringUtils.isNotBlank(labelMap)){
+            Map map = (Map) JSONObject.parse(labelMap);
+            param.setLabelMap(map);
+        }
         if(!Objects.isNull(properties.get("baseClass"))) {
             param.setSuperEntityClass((Class) properties.get("baseClass"));
         }
