@@ -5,6 +5,8 @@ import lombok.experimental.Accessors;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
+import java.util.Map;
+
 @Data
 @Accessors(chain = true)
 @Configuration
@@ -99,4 +101,6 @@ public class MpGeneratorParamConfig {
     private boolean modulePackage = true;
 
 
+    @Value("#{${gen.label.map}}")
+    private Map<String,Object> labelMap;
 }

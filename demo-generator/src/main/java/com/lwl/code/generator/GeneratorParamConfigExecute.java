@@ -8,7 +8,7 @@ import com.lwl.code.template.GeneratorParamTemplate;
 import java.util.Properties;
 
 /**
- * @description： 通过读取config 配置来初始化参数
+ * @description： 通过读取yml 配置来初始化参数
  * @author     ：lwl
  * @date       ：2021/7/20 10:36
  * @version:     1.0.0

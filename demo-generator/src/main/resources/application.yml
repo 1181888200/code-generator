@@ -22,3 +22,7 @@ gen:
     modulePackage: true
 
     baseClass: com.lwl.code.model.BaseModel
+
+  label:
+    map: '{"isAddController":true,"test2":"54321","test3":54321}'
+

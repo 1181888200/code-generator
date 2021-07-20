@@ -121,7 +121,7 @@ public abstract class CodeGeneratorTemplate {
         // 关闭默认 xml 生成，调整生成 至 根目录
         templateConfigTemplate.setTemplate(mpg,param);
         // 设置标签
-        InjectionConfig cfg = injectionConfigTemplate.injectionConfig(mpg);
+        InjectionConfig cfg = injectionConfigTemplate.injectionConfig(mpg,param);
         // 设置文件存储位置
         fileOutPathTemplate.setFileOutPath(param,mpg, cfg);
         // 执行生成

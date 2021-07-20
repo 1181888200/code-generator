@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.experimental.Accessors;
 import org.apache.commons.lang3.StringUtils;
 
+import java.util.Map;
+
 /**
  * @description： 自动创建代码参数
  * @author     ：lwl
@@ -35,6 +37,7 @@ public class MpGeneratorParam {
         this.serviceImplName = config.getServiceImplName();
         this.serviceName = config.getServiceName();
         this.modulePackage = config.isModulePackage();
+        this.labelMap = config.getLabelMap();
     }
 
 
@@ -107,6 +110,10 @@ public class MpGeneratorParam {
 
     private boolean modulePackage = true;
 
+    /**
+     *  自定义标签
+     */
+    private Map<String,Object> labelMap;
 
     public MpGeneratorParam builderDb(String url,String username,String password,String driverName){
         return setUrl(url).setPassword(password).setUsername(username).setDriverName(driverName);
