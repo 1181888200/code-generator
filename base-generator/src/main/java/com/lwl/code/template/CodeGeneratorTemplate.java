@@ -2,7 +2,6 @@ package com.lwl.code.template;
 
 import com.baomidou.mybatisplus.generator.AutoGenerator;
 import com.baomidou.mybatisplus.generator.InjectionConfig;
-import com.baomidou.mybatisplus.generator.config.*;
 import com.lwl.code.exception.GeneratorException;
 import com.lwl.code.generator.*;
 import com.lwl.code.param.MpGeneratorParam;
@@ -22,30 +21,58 @@ import java.util.*;
 @Accessors(chain = true)
 public abstract class CodeGeneratorTemplate {
 
-
+    /**
+     * 自定义数据源配置
+     */
     private DataSourceConfigTemplate dataSourceConfigTemplate;
 
+    /**
+     * 自定义文件输出位置配置
+     */
     private FileOutPathTemplate fileOutPathTemplate;
 
+    /**
+     *  初始化参数配置
+     */
     private GeneratorParamTemplate generatorParamTemplate;
-
+    /**
+     * 自定义策略配置
+     */
     private StrategyTemplate strategyTemplate;
 
+    /**
+     * 自定义模板配置
+     */
     private TemplateConfigTemplate templateConfigTemplate;
 
+    /**
+     *  自定义模板变量配置
+     */
     private InjectionConfigTemplate injectionConfigTemplate;
+    /**
+     * 自定义全局配置
+     */
+    private GlobalConfigTemplate globalConfigTemplate;
 
+    /**
+     *  自定义包信息
+     */
+    private PackageConfigTemplate packageConfigTemplate;
 
     public CodeGeneratorTemplate(GeneratorParamTemplate generatorParamTemplate) throws GeneratorException {
         this(new MysqlDataSourceConfig(),new DefaultFileOutPath()
-                ,new DefaultStrategy(),new DefaultTemplateConfig(),new DefaultInjectionConfig());
+                ,new DefaultStrategy(),new DefaultTemplateConfig()
+                ,new DefaultInjectionConfig(),new DefaultGlobalConfig(),
+                new DefaultPackageConfig());
         this.generatorParamTemplate = generatorParamTemplate;
     }
 
     public CodeGeneratorTemplate(DataSourceConfigTemplate dataSourceConfigTemplate
             , FileOutPathTemplate fileOutPathTemplate, StrategyTemplate strategyTemplate,
                                  TemplateConfigTemplate templateConfigTemplate,
-                                 InjectionConfigTemplate injectionConfigTemplate) throws GeneratorException {
+                                 InjectionConfigTemplate injectionConfigTemplate,
+                                 GlobalConfigTemplate globalConfigTemplate,
+                                 PackageConfigTemplate packageConfigTemplate) throws GeneratorException {
         if(Objects.isNull(dataSourceConfigTemplate)) {
             throw new GeneratorException("自动创建代码-->数据源没有配置");
         }
@@ -57,6 +84,8 @@ public abstract class CodeGeneratorTemplate {
         this.strategyTemplate = strategyTemplate;
         this.templateConfigTemplate = templateConfigTemplate;
         this.injectionConfigTemplate = injectionConfigTemplate;
+        this.globalConfigTemplate = globalConfigTemplate;
+        this.packageConfigTemplate = packageConfigTemplate;
     }
 
 
@@ -79,7 +108,7 @@ public abstract class CodeGeneratorTemplate {
     private  void doExecute(MpGeneratorParam param) {
         AutoGenerator mpg = new AutoGenerator();
         // 全局配置
-        setConfig(param, mpg);
+        globalConfigTemplate.setConfig(param, mpg);
 
         // 数据源配置
         dataSourceConfigTemplate.addDb(mpg,param);
@@ -88,7 +117,7 @@ public abstract class CodeGeneratorTemplate {
         strategyTemplate.initStrategy(mpg,param);
 
         //包配置
-        addPackage(mpg,param);
+        packageConfigTemplate.setPackage(mpg,param);
         // 关闭默认 xml 生成，调整生成 至 根目录
         templateConfigTemplate.setTemplate(mpg,param);
         // 设置标签
@@ -98,38 +127,6 @@ public abstract class CodeGeneratorTemplate {
         // 执行生成
         mpg.execute();
 
-    }
-
-    public  void setConfig(MpGeneratorParam param, AutoGenerator mpg) {
-        final GlobalConfig gc = new GlobalConfig();
-        gc.setOutputDir(param.getJavaPath());
-        gc.setFileOverride(true);
-        gc.setActiveRecord(false);
-
-        // XML 二级缓存
-        gc.setEnableCache(false);
-        // XML ResultMap
-        gc.setBaseResultMap(true);
-        // XML columList
-        gc.setBaseColumnList(false);
-        gc.setAuthor(StringUtils.isNotBlank(param.getAuthor())?param.getAuthor():"admin");
-        mpg.setGlobalConfig(gc);
-    }
-
-
-    public static void addPackage(AutoGenerator mpg,MpGeneratorParam param){
-        final PackageConfig pc = new PackageConfig();
-
-        if(StringUtils.isNotBlank(param.getModuleName())&&param.isModulePackage()){
-            pc.setModuleName(param.getModuleName());
-        }
-        pc.setParent(param.getPackageName());
-        pc.setEntity(param.getEntityName());
-        pc.setMapper(param.getMapperName());
-        pc.setController(param.getControllerName());
-        pc.setService(param.getServiceName());
-        pc.setServiceImpl(param.getServiceImplName());
-        mpg.setPackageInfo(pc);
     }
 
 
